@@ -1,0 +1,6 @@
+{
+  "name": "Logic Gate Challenge",
+  "description": "An interactive, educational puzzle game to learn and practice logic gates (AND, OR, NOT, XOR).",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

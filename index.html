@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Logic Gate Challenge - Learn Logic Circuits</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+
+  <div class="app-container" id="app-root">
+
+    <!-- Screen 1: Start Screen Layout -->
+    <div class="screen-root" id="start-screen">
+      <div class="intro-panel card-glass" id="start-panel-card">
+        <div class="game-title-container" id="title-wrapper">
+          <h1 class="game-title" id="main-banner-title">LOGIC GATE CHALLENGE</h1>
+          <p class="game-subtitle" id="main-banner-sub">Educational Circuit Puzzle</p>
+        </div>
+        
+        <p class="game-desc" id="start-description">
+          Welcome to the digital grid! Solve progressive engineering puzzles by selecting, dragging, and connecting 
+          computational logic gates. Witness electrical signals propagate dynamically across circuits, toggling inputs, 
+          and closing outputs to verify real boolean algebra!
+        </p>
+
+        <!-- Preview Gates Decorative Layout -->
+        <div class="preview-gates" id="preview-gate-badges">
+          <div class="gate-badge" id="badge-not">NOT (Invert)</div>
+          <div class="gate-badge" id="badge-and">AND (Conjunction)</div>
+          <div class="gate-badge" id="badge-or">OR (Disjunction)</div>
+          <div class="gate-badge" id="badge-xor">XOR (Exclusive)</div>
+        </div>
+
+        <button class="btn-primary" id="start-game-btn">
+          <span>INITIALIZE CIRCUITS</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="start-btn-svg">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+
+    <!-- Screen 2: Game Dashboard Screen Layout -->
+    <div class="screen-root hidden" id="game-screen">
+      
+      <!-- Top Navigation Header -->
+      <header class="game-header" id="top-nav-bar">
+        <div class="logo-group" id="header-logo-group">
+          <div class="logo-icon" id="header-logo-symbol">&amp;</div>
+          <h2 class="logo-text" id="header-logo-title">LOGIC CIRCUITS</h2>
+        </div>
+        
+        <div class="header-stats" id="top-stats-container">
+          <div class="stat-box" id="stat-lvl-box">
+            <span class="stat-label" id="stat-lvl-label">Level Progress</span>
+            <span class="stat-value" id="stat-display-level">1 / 8</span>
+          </div>
+          <div class="stat-box" id="stat-scr-box">
+            <span class="stat-label" id="stat-scr-label">Total Score</span>
+            <span class="stat-value score" id="stat-display-score">0</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Columns Flex Grid Layout -->
+      <main class="game-layout" id="main-board-layout">
+        
+        <!-- Left Sidebar: Progress tracker & interactive cheatsheet instructions -->
+        <section class="panel-left" id="sidebar-left-panel">
+          
+          <!-- Level Select scrolling panel -->
+          <div class="level-scroller card-glass" id="levels-navigation-scroller">
+            <h4 class="reference-title" style="margin-bottom: 0.5rem;" id="nav-scroller-header">SOLVE CIRCUITS:</h4>
+            <div id="level-scroller-list">
+              <!-- Dynamically Filled by script.js -->
+            </div>
+          </div>
+
+          <!-- Dynamic Level Details & Objectives card -->
+          <div class="card-info card-glass" id="objective-details-card">
+            <h3 class="level-title-main" id="current-level-title">Level 1: The Inverter</h3>
+            <p class="level-description-text" id="level-description">Learn how to flip a binary signal...</p>
+            
+            <div class="level-objective-box" id="level-objective-box">
+              <div class="objective-title" id="objective-target-title">CIRCUIT OBJECTIVE</div>
+              <p class="objective-desc" id="objective-description">Assemble a logic circuit producing 1 at the final output.</p>
+            </div>
+          </div>
+
+          <!-- Gates Quick reference dictionary -->
+          <div class="reference-section card-glass" id="reference-cheatsheet-section">
+            <h3 class="reference-title" id="cheatsheet-header">GATE REFERENCE</h3>
+            <div class="reference-grid" id="reference-cheatsheet-grid">
+              
+              <div class="ref-row" id="cheatsheet-not">
+                <span class="ref-badge" id="cheatsheet-not-badge">NOT</span>
+                <div class="ref-details" id="cheatsheet-not-details">
+                  <div class="ref-name" id="cheatsheet-not-name">Inverter</div>
+                  <div class="ref-math" id="cheatsheet-not-formula">Out = !In</div>
+                  <div class="ref-truth" id="cheatsheet-not-truth">0 → 1 | 1 → 0</div>
+                </div>
+              </div>
+
+              <div class="ref-row" id="cheatsheet-and">
+                <span class="ref-badge" id="cheatsheet-and-badge">AND</span>
+                <div class="ref-details" id="cheatsheet-and-details">
+                  <div class="ref-name" id="cheatsheet-and-name">Conjunction</div>
+                  <div class="ref-math" id="cheatsheet-and-formula">Out = A &amp;&amp; B</div>
+                  <div class="ref-truth" id="cheatsheet-and-truth">1 &amp; 1 → 1 (Else 0)</div>
+                </div>
+              </div>
+
+              <div class="ref-row" id="cheatsheet-or">
+                <span class="ref-badge" id="cheatsheet-or-badge">OR</span>
+                <div class="ref-details" id="cheatsheet-or-details">
+                  <div class="ref-name" id="cheatsheet-or-name">Disjunction</div>
+                  <div class="ref-math" id="cheatsheet-or-formula">Out = A || B</div>
+                  <div class="ref-truth" id="cheatsheet-or-truth">At least one 1 → 1</div>
+                </div>
+              </div>
+
+              <div class="ref-row" id="cheatsheet-xor">
+                <span class="ref-badge" id="cheatsheet-xor-badge">XOR</span>
+                <div class="ref-details" id="cheatsheet-xor-details">
+                  <div class="ref-name" id="cheatsheet-xor-name">Exclusive OR</div>
+                  <div class="ref-math" id="cheatsheet-xor-formula">Out = A != B</div>
+                  <div class="ref-truth" id="cheatsheet-xor-truth">Different → 1 | Same → 0</div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+
+        <!-- Middle Panel: Circuit Board Playground Area -->
+        <section class="panel-center" id="circuit-board">
+          
+          <!-- Feedback Visual Flash overlay (Green or Red) -->
+          <div class="board-feedback-overlay" id="board-feedback-overlay"></div>
+
+          <div class="board-container" id="board-container">
+            <!-- Persistent reactive lines layer -->
+            <svg class="circuit-svg" id="circuit-svg-canvas">
+              <defs>
+                <filter id="wire-glow-filter" x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur stdDeviation="3" result="blur"></feGaussianBlur>
+                  <feComposite in="SourceGraphic" in2="blur" operator="over"></feComposite>
+                </filter>
+              </defs>
+              <!-- Dynamic connecting curves are appended here via Javascript -->
+            </svg>
+
+            <!-- Interactive nodes, input switches, matching slots layer -->
+            <div class="board-nodes-layer" id="board-nodes-layer">
+              <!-- Dynamically Filled by script.js Column Grid Loader -->
+            </div>
+          </div>
+
+          <div class="click-hint-text" style="position: absolute; bottom: 8px; left: 16px; pointer-events: none;" id="board-help-text">
+            💡 Sandbox Mode: Tap inputs (IN:A, IN:B, etc.) to toggle their state on the fly!
+          </div>
+        </section>
+
+
+        <!-- Right Sidebar: Interactive Gate Inventory toolbox drop-sources -->
+        <section class="panel-right" id="sidebar-right-panel">
+          <div class="toolbox-card card-glass" id="gate-toolbox-card">
+            <h3 class="toolbox-title" id="toolbox-header">GATES INVENTORY</h3>
+            <p class="toolbox-sub" id="toolbox-helper-text">
+              Hold, drag, and drop any gate into an empty slot. Or tap a gate below to select, then click any slot to place it.
+            </p>
+
+            <div class="toolbox-gates-grid" id="toolbox-draggables-list">
+              
+              <!-- NOT Gate -->
+              <div class="toolbox-gate-pill" draggable="true" data-gate="NOT" id="gate-source-not">
+                <div class="gate-pill-left" id="gate-info-not">
+                  <div class="gate-pill-symbol" id="gate-sym-not">!</div>
+                  <div class="gate-pill-details" id="gate-det-not">
+                    <span class="gate-pill-name" id="gate-name-not">NOT Gate</span>
+                    <span class="gate-pill-helper" id="gate-help-not">Inverts 1 Input</span>
+                  </div>
+                </div>
+                <div class="gate-pill-drag-handle" id="handle-not">
+                  <span class="handle-dot"></span>
+                  <span class="handle-dot"></span>
+                  <span class="handle-dot"></span>
+                </div>
+              </div>
+
+              <!-- AND Gate -->
+              <div class="toolbox-gate-pill" draggable="true" data-gate="AND" id="gate-source-and">
+                <div class="gate-pill-left" id="gate-info-and">
+                  <div class="gate-pill-symbol" id="gate-sym-and">&amp;</div>
+                  <div class="gate-pill-details" id="gate-det-and">
+                    <span class="gate-pill-name" id="gate-name-and">AND Gate</span>
+                    <span class="gate-pill-helper" id="gate-help-and">Both inputs active</span>
+                  </div>
+                </div>
+                <div class="gate-pill-drag-handle" id="handle-and">
+                  <span class="handle-dot"></span>
+                  <span class="handle-dot"></span>
+                  <span class="handle-dot"></span>
+                </div>
+              </div>
+
+              <!-- OR Gate -->
+              <div class="toolbox-gate-pill" draggable="true" data-gate="OR" id="gate-source-or">
+                <div class="gate-pill-left" id="gate-info-or">
+                  <div class="gate-pill-symbol" id="gate-sym-or">≥1</div>
+                  <div class="gate-pill-details" id="gate-det-or">
+                    <span class="gate-pill-name" id="gate-name-or">OR Gate</span>
+                    <span class="gate-pill-helper" id="gate-help-or">At least one active</span>
+                  </div>
+                </div>
+                <div class="gate-pill-drag-handle" id="handle-or">
+                  <span class="handle-dot"></span>
+                  <span class="handle-dot"></span>
+                  <span class="handle-dot"></span>
+                </div>
+              </div>
+
+              <!-- XOR Gate -->
+              <div class="toolbox-gate-pill" draggable="true" data-gate="XOR" id="gate-source-xor">
+                <div class="gate-pill-left" id="gate-info-xor">
+                  <div class="gate-pill-symbol" id="gate-sym-xor">=1</div>
+                  <div class="gate-pill-details" id="gate-det-xor">
+                    <span class="gate-pill-name" id="gate-name-xor">XOR Gate</span>
+                    <span class="gate-pill-helper" id="gate-help-xor">Inputs must differ</span>
+                  </div>
+                </div>
+                <div class="gate-pill-drag-handle" id="handle-xor">
+                  <span class="handle-dot"></span>
+                  <span class="handle-dot"></span>
+                  <span class="handle-dot"></span>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Dynamic guide for tap-to-place actions -->
+            <div class="selection-guide-box" id="tap-to-place-guide">
+              Drag a gate into the circuit board or tap a gate to select it.
+            </div>
+
+            <button class="btn-secondary" style="margin-top: auto; padding: 0.75rem; justify-content: center;" id="restart-all-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" id="restart-all-svg">
+                <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+              </svg>
+              <span>Reset Game Progress</span>
+            </button>
+          </div>
+        </section>
+
+      </main>
+
+      <!-- Bottom Grid Evaluation Board Controllers Bar -->
+      <footer class="game-controls-bar" id="game-controls-footer">
+        <div class="tutorial-notice" id="keyboard-navigation-guide">
+          <span>TIPS: </span>
+          <span class="keyboard-cap">Mouse Drag/Drop</span> &amp; <span class="keyboard-cap">Mobile Touch Tap-to-Place</span> fully supported!
+        </div>
+
+        <div class="control-btn-group" id="footer-actions-group">
+          <button class="btn-secondary" id="btn-reset-level">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="btn-reset-svg">
+              <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+              <polyline points="16 3 21 8 16 8"></polyline>
+              <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+              <polyline points="8 21 3 16 8 16"></polyline>
+            </svg>
+            <span>Reset Grid</span>
+          </button>
+          <button class="btn-secondary" id="btn-get-hint">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="btn-hint-svg">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+            <span>Get Clue</span>
+          </button>
+          <button class="btn-accent" id="btn-check-solution">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" id="btn-run-svg">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span>TEST CIRCUIT &amp; SUBMIT</span>
+          </button>
+        </div>
+      </footer>
+    </div>
+
+
+    <!-- Screen 3: Success Modal Overlay -->
+    <div class="modal-overlay hidden" id="success-modal">
+      <div class="modal-content card-glass" id="modal-glass-container">
+        <div class="modal-success-badge" id="success-checkmark-wrapper">✔</div>
+        <h2 class="modal-title" id="success-modal-title">Circuit Connected!</h2>
+        <div class="modal-subtitle" id="modal-points-text">+150 Bits</div>
+        
+        <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 1.5rem;" id="success-feedback-text">
+          Congratulations! Your circuit is perfectly configured. The output matches standard criteria.
+        </p>
+
+        <!-- Dynamic educational snippet card -->
+        <div class="modal-summary-box" id="educational-snippets-container">
+          <div class="summary-fact-title" id="fact-card-title">NOT Gate (Inverter)</div>
+          <div class="summary-fact-desc" id="fact-card-desc">
+            A NOT gate reverses its input signal...
+          </div>
+        </div>
+
+        <button class="btn-primary" style="width: 100%; justify-content: center;" id="next-level-modal-btn">
+          <span>PROCEED TO NEXT LEVEL</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="modal-btn-svg">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+
+    <!-- Screen 4: All levels complete celebration victory card -->
+    <div class="screen-root hidden" id="completed-screen">
+      <div class="congrats-panel card-glass" id="congrats-panel-container">
+        <div class="trophy-badge" id="completion-trophy-wrapper">🏆</div>
+        <h1 class="completed-title" id="completed-header">MASTER INTEGRATED ARCHITECT</h1>
+        <div class="completed-subtitle" id="completed-badge-subtitle">Challenge Fully Solved!</div>
+        
+        <p class="completed-desc" id="completion-praise-desc">
+          Outstanding! You have successfully resolved all progressive computational circuits. You understand NOT, AND, OR, 
+          and XOR operations, as well as complex cascading signal propagation networks!
+        </p>
+
+        <div class="complete-stats-row" id="final-stats-rack">
+          <div class="stat-box" style="padding: 1rem;" id="final-scr-widget">
+            <span class="stat-label animate-pulse" id="final-scr-lbl">Cumulative Bits</span>
+            <span class="stat-value score" style="font-size: 2rem;" id="final-total-score">1200</span>
+          </div>
+          <div class="stat-box" style="padding: 1rem; align-items: center; justify-content: center;" id="final-badge-widget">
+            <span class="stat-label" id="final-badge-lbl">Acquired Title</span>
+            <span class="stat-value" style="font-size: 1.1rem; color: var(--color-accent-amber); font-weight: bold;" id="final-badge-title">Logic Guru</span>
+          </div>
+        </div>
+
+        <button class="btn-primary" id="btn-play-again">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="play-again-svg">
+            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+          </svg>
+          <span>REBOOT CHALLENGE</span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="./script.js"></script>
+</body>
+</html>
